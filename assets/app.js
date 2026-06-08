@@ -405,11 +405,14 @@
           var rows = (p.items || []).filter(matches);
           grid.innerHTML = rows.map(function (item) {
             var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(g) + "</span>"; }).join("");
+            var exN = (item.exhibitors || []).length;
+            var exMeta = exN ? '<p class="card__exmeta"><span class="material-symbols-rounded" aria-hidden="true">storefront</span>' +
+              exN + (L.state.lang === "en" ? " related exhibitors" : " 家相關廠商") + "</p>" : "";
             return '<article class="card" tabindex="0" role="button" data-item data-slug="' + esc(item.slug) + '" ' +
               'aria-label="' + esc(t(item.title)) + '">' +
               '<h3 class="card__title">' + esc(t(item.title)) + "</h3>" +
               '<p class="card__summary">' + esc(t(item.summary)) + "</p>" +
-              (tags ? '<div class="card__tags">' + tags + "</div>" : "") + "</article>";
+              (tags ? '<div class="card__tags">' + tags + "</div>" : "") + exMeta + "</article>";
           }).join("");
           if (count) count.textContent = rows.length + (L.state.lang === "en" ? " result(s)" : " 筆結果");
           wireCards();
@@ -430,9 +433,25 @@
           var item = findItem(slug); if (!item) return;
           var dlg = L.dialog(), body = document.getElementById("dialogBody");
           var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(g) + "</span>"; }).join("");
+          var exList = item.exhibitors || [];
+          var exHtml = "";
+          if (exList.length) {
+            var exTitle = L.state.lang === "en" ? "Related exhibitors" : "相關廠商";
+            var dirUrl = "https://expo.semi.org/taiwan2026/public/exhibitors.aspx?ID=31939&sortMenu=103001";
+            var more = L.state.lang === "en" ? "Full exhibitor directory" : "完整參展廠商名錄";
+            var exItems = exList.map(function (x) {
+              return '<li class="ex-item"><span class="ex-name">' + esc(x.name) + "</span>" +
+                (x.booth ? '<span class="ex-booth">' + esc(x.booth) + "</span>" : "") + "</li>";
+            }).join("");
+            exHtml = '<div class="ex-block"><h3 class="ex-block__title">' + esc(exTitle) +
+              ' <span class="ex-block__count">' + exList.length + "</span></h3>" +
+              '<ul class="ex-list">' + exItems + "</ul>" +
+              '<a class="acc-link ex-more" href="' + dirUrl + '" target="_blank" rel="noopener">' +
+              "<span>" + esc(more) + '</span><span class="material-symbols-rounded" aria-hidden="true">open_in_new</span></a></div>';
+          }
           body.innerHTML = '<h2 id="dialogTitle">' + esc(t(item.title)) + "</h2>" +
             (tags ? '<div class="card__tags">' + tags + "</div>" : "") +
-            "<p>" + esc(t(item.overview) || t(item.summary)) + "</p>";
+            "<p>" + esc(t(item.overview) || t(item.summary)) + "</p>" + exHtml;
           if (!dlg.open) dlg.showModal();
           if (location.hash.slice(1) !== slug) history.replaceState(null, "", "#" + slug);
         }
