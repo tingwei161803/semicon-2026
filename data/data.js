@@ -236,6 +236,73 @@ window.SITE_PAGES = [
   },
 
   /* ===================================================================== *
+   *  SCHEDULE — every forum in chronological order (exact time + venue)
+   * ===================================================================== */
+  {
+    slug: "schedule", layout: "timeline", icon: "calendar_month",
+    title:    { en: "Forum Schedule", zh: "論壇時間軸" },
+    subtitle: { en: "Every international forum in chronological order with exact times and venues (Aug 31–Sep 4). Forums are spread across Taipei Nangang (TaiNEX) and nearby hotels — check the venue for each session.",
+                zh: "所有國際論壇依時間排序，標註確切時間與地點（8/31–9/4）。論壇分散於南港展覽館與鄰近飯店，請逐場確認地點。" },
+    events: [
+      /* ---- Mon, Aug 31 ---- */
+      { date: { en: "Aug 31 Mon · 08:30", zh: "8/31 週一 · 08:30" }, title: { en: "Advanced Process Technology Forum", zh: "半導體先進製程科技論壇" },
+        body: { en: "08:30–15:10 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall C", zh: "時間 08:30–15:10 ｜ 地點 台北漢來大飯店 3F 鉑金C廳" } },
+      { date: { en: "Aug 31 Mon · 08:50", zh: "8/31 週一 · 08:50" }, title: { en: "MEMS & Sensors Forum", zh: "微機電暨感測器論壇" },
+        body: { en: "08:50–16:25 · Ya-Yue Hall, 3F Bao-Li Hall", zh: "時間 08:50–16:25 ｜ 地點 雅悅會館 3F 寶儷廳" } },
+      { date: { en: "Aug 31 Mon · 09:00", zh: "8/31 週一 · 09:00" }, title: { en: "Silicon Photonics Forum", zh: "矽光子國際論壇" },
+        body: { en: "09:00–17:05 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall B", zh: "時間 09:00–17:05 ｜ 地點 台北漢來大飯店 3F 鉑金B廳" } },
+      { date: { en: "Aug 31 Mon · 13:00", zh: "8/31 週一 · 13:00" }, title: { en: "Panel-Level Fan-Out Packaging Forum (HIGS series)", zh: "面板級扇出型封裝創新論壇（HIGS 系列）" },
+        body: { en: "13:00–17:00 · Ya-Yue Hall, 3F Fu-Li Hall", zh: "時間 13:00–17:00 ｜ 地點 雅悅會館 3F 馥儷廳" } },
+
+      /* ---- Tue, Sep 1 ---- */
+      { date: { en: "Sep 1 Tue · 08:30", zh: "9/1 週二 · 08:30" }, title: { en: "Heterogeneous Integration Global Summit — Day 1", zh: "異質整合國際高峰論壇（HIGS）第一天" },
+        body: { en: "08:30–17:00 · Ya-Yue Hall, 3F Fu-Li Hall", zh: "時間 08:30–17:00 ｜ 地點 雅悅會館 3F 馥儷廳" } },
+      { date: { en: "Sep 1 Tue · 08:30", zh: "9/1 週二 · 08:30" }, title: { en: "Quantum Taiwan Forum — Quantum Computers", zh: "量子台灣論壇 — 量子電腦" },
+        body: { en: "08:30–17:00 · TaiNEX 1, 5F Room 504", zh: "時間 08:30–17:00 ｜ 地點 南港展覽館 1 館 5F-504" } },
+      { date: { en: "Sep 1 Tue · 08:30", zh: "9/1 週二 · 08:30" }, title: { en: "Power & Compound Semiconductor Forum", zh: "功率暨化合物半導體論壇" },
+        body: { en: "08:30–16:50 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall B", zh: "時間 08:30–16:50 ｜ 地點 台北漢來大飯店 3F 鉑金B廳" } },
+      { date: { en: "Sep 1 Tue · 09:00", zh: "9/1 週二 · 09:00" }, title: { en: "Smart Manufacturing Forum", zh: "高科技智慧製造論壇" },
+        body: { en: "09:00–16:20 · Ya-Yue Hall, 3F Bao-Li Hall", zh: "時間 09:00–16:20 ｜ 地點 雅悅會館 3F 寶儷廳" } },
+      { date: { en: "Sep 1 Tue · 09:30", zh: "9/1 週二 · 09:30" }, title: { en: "3DIC Global Summit", zh: "3DIC 全球高峰論壇" },
+        body: { en: "09:30–12:00 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall C", zh: "時間 09:30–12:00 ｜ 地點 台北漢來大飯店 3F 鉑金C廳" } },
+      { date: { en: "Sep 1 Tue · 13:00", zh: "9/1 週二 · 13:00" }, title: { en: "Market Trends Forum", zh: "市場趨勢論壇" },
+        body: { en: "13:00–16:40 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall C", zh: "時間 13:00–16:40 ｜ 地點 台北漢來大飯店 3F 鉑金C廳" } },
+      { date: { en: "Sep 1 Tue · 13:30", zh: "9/1 週二 · 13:30" }, title: { en: "Memory Summit", zh: "記憶體高峰論壇" },
+        body: { en: "13:30–17:20 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall A", zh: "時間 13:30–17:20 ｜ 地點 台北漢來大飯店 3F 鉑金A廳" } },
+
+      /* ---- Wed, Sep 2 ---- */
+      { date: { en: "Sep 2 Wed · 08:30", zh: "9/2 週三 · 08:30" }, title: { en: "Quantum Taiwan Forum — Enabling Tech Ecosystem", zh: "量子台灣論壇 — 關鍵支援技術生態系" },
+        body: { en: "08:30–17:00 · TaiNEX 1, 5F Room 504", zh: "時間 08:30–17:00 ｜ 地點 南港展覽館 1 館 5F-504" } },
+      { date: { en: "Sep 2 Wed · 09:30", zh: "9/2 週三 · 09:30" }, title: { en: "Semiconductor Sustainability Forum", zh: "半導體永續力國際論壇" },
+        body: { en: "09:30–16:25 · TaiNEX 1, 4F Room 402", zh: "時間 09:30–16:25 ｜ 地點 南港展覽館 1 館 4F-402" } },
+      { date: { en: "Sep 2 Wed · 10:00", zh: "9/2 週三 · 10:00" }, title: { en: "CEO Summit", zh: "大師論壇" },
+        body: { en: "10:00–17:00 · TaiNEX 2, 7F Room 701AB (Future Stage)", zh: "時間 10:00–17:00 ｜ 地點 南港展覽館 2 館 7F-701AB（Future Stage）" } },
+
+      /* ---- Thu, Sep 3 ---- */
+      { date: { en: "Sep 3 Thu · 08:30", zh: "9/3 週四 · 08:30" }, title: { en: "Heterogeneous Integration Global Summit — Day 2", zh: "異質整合國際高峰論壇（HIGS）第二天" },
+        body: { en: "08:30–17:00 · Ya-Yue Hall, 3F Fu-Li Hall", zh: "時間 08:30–17:00 ｜ 地點 雅悅會館 3F 馥儷廳" } },
+      { date: { en: "Sep 3 Thu · 08:30", zh: "9/3 週四 · 08:30" }, title: { en: "High-Tech Facility Forum", zh: "高科技廠房設施國際論壇" },
+        body: { en: "08:30–17:00 · Grand Hi-Lai Hotel Taipei, 3F Platinum Hall A & B", zh: "時間 08:30–17:00 ｜ 地點 台北漢來大飯店 3F 鉑金A、B廳" } },
+      { date: { en: "Sep 3 Thu · 09:00", zh: "9/3 週四 · 09:00" }, title: { en: "Advanced Test Forum", zh: "先進測試論壇" },
+        body: { en: "09:00–16:00 · Ya-Yue Hall, 3F Bao-Li Hall", zh: "時間 09:00–16:00 ｜ 地點 雅悅會館 3F 寶儷廳" } },
+      { date: { en: "Sep 3 Thu · 09:30", zh: "9/3 週四 · 09:30" }, title: { en: "Strategic Materials Conference (SMC)", zh: "策略材料高峰論壇" },
+        body: { en: "09:30–16:55 · TaiNEX 2, 7F Room 701AB (Future Stage)", zh: "時間 09:30–16:55 ｜ 地點 南港展覽館 2 館 7F-701AB（Future Stage）" } },
+
+      /* ---- Fri, Sep 4 ---- */
+      { date: { en: "Sep 4 Fri · 08:30", zh: "9/4 週五 · 08:30" }, title: { en: "Heterogeneous Integration Global Summit — Day 3", zh: "異質整合國際高峰論壇（HIGS）第三天" },
+        body: { en: "08:30–15:30 · Ya-Yue Hall, 3F Fu-Li Hall", zh: "時間 08:30–15:30 ｜ 地點 雅悅會館 3F 馥儷廳" } },
+      { date: { en: "Sep 4 Fri · 08:30", zh: "9/4 週五 · 08:30" }, title: { en: "Advanced Inspection & Metrology Forum", zh: "半導體先進檢測與計量國際論壇" },
+        body: { en: "08:30–16:20 · TaiNEX 1, 4F Room 402", zh: "時間 08:30–16:20 ｜ 地點 南港展覽館 1 館 4F-402" } },
+      { date: { en: "Sep 4 Fri · 09:30", zh: "9/4 週五 · 09:30" }, title: { en: "Semiconductor Cybersecurity Summit", zh: "半導體資安趨勢高峰論壇" },
+        body: { en: "From 09:30 · Ya-Yue Hall, 3F Bao-Li Hall", zh: "時間 09:30 起 ｜ 地點 雅悅會館 3F 寶儷廳" } },
+      { date: { en: "Sep 4 Fri · 10:00", zh: "9/4 週五 · 10:00" }, title: { en: "SEMI 20Under40 Salon", zh: "SEMI 半導體新銳獎沙龍" },
+        body: { en: "From 10:00 · Taipei Nangang (TaiNEX) — see official site for the room", zh: "時間 10:00 起 ｜ 地點 南港展覽館（會議室詳見官網）" } },
+      { date: { en: "Sep 4 Fri · 13:00", zh: "9/4 週五 · 13:00" }, title: { en: "20Under40 Awards & Tech Master Forum", zh: "SEMI 半導體新銳獎頒獎典禮 & 科技大師論壇" },
+        body: { en: "From 13:00 · Taipei Nangang (TaiNEX) — closing-day finale; see official site for the room", zh: "時間 13:00 起 ｜ 地點 南港展覽館（閉幕日壓軸，會議室詳見官網）" } }
+    ]
+  },
+
+  /* ===================================================================== *
    *  ZONES — themed technology pavilions (bento showcase)
    * ===================================================================== */
   {
@@ -300,6 +367,68 @@ window.SITE_PAGES = [
         title: { en: "Signature activities", zh: "亮點活動" },
         body:  { en: "Beyond the forums: the Opening Ceremony, the Industry Leadership Dinner, TechXPOT show-floor presentations, SEMI Forest, hospitality suites and partner events — plus the co-located Smart Manufacturing Taiwan exhibition.",
                  zh: "論壇之外的亮點：開幕典禮、科技菁英領袖晚宴、創新技術發表會 TechXPOT、SEMI Forest、企業貴賓室與合作夥伴活動——以及同期展出的「高科技智慧製造特展」。" } }
+    ]
+  },
+
+  /* ===================================================================== *
+   *  GUIDE — tailored "what to see" advice per visitor persona (gallery)
+   * ===================================================================== */
+  {
+    slug: "guide", layout: "gallery", icon: "tips_and_updates",
+    title:    { en: "Visit Guide", zh: "逛展參考" },
+    subtitle: { en: "Different visitors, different routes. Pick the profile that fits you for a tailored set of forums, zones and tips.",
+                zh: "不同的人，看不同的重點。挑一個最貼近你的身分，獲得量身的論壇、特區與動線建議。" },
+    categories: [
+      { key: "technical", en: "Technical",       zh: "技術人" },
+      { key: "business",  en: "Business",        zh: "商務人" },
+      { key: "talent",    en: "Talent & Guests", zh: "學界與訪客" }
+    ],
+    items: [
+      { slug: "process-eng", category: "technical", tags: ["先進製程", "計量檢測", "智慧製造"],
+        title:   { en: "Process & Equipment Engineers", zh: "製程・設備工程師" },
+        summary: { en: "Chasing the leading edge of nodes, metrology and the fab floor.", zh: "鎖定最前沿製程、量測與產線的工程師。" },
+        overview:{ en: "Don't miss the Advanced Process Technology Forum (Aug 31), plus Inspection & Metrology and Advanced Test (Sep 3–4). On the floor, head to the Smart Fab Zone for AI-plus-robotics production lines. Tip: forum days (Aug 31, Sep 3) sit largely off-site at the hotels — separate them from your show-floor days (Sep 2–4).",
+                   zh: "必看「半導體先進製程科技論壇」（8/31），以及「先進檢測與計量」「先進測試」（9/3–9/4）；展場則到「晶圓智造特區」看 AI×機器人產線。動線提示：論壇多在漢來飯店與雅悅會館，建議把論壇日（8/31、9/3）與逛展日（9/2–9/4）分開安排。" } },
+      { slug: "packaging-eng", category: "technical", tags: ["HIGS", "3DIC", "面板級扇出"],
+        title:   { en: "Packaging & Heterogeneous Integration", zh: "封裝・異質整合工程師" },
+        summary: { en: "Chiplets, advanced packaging and 3D stacking are your world.", zh: "小晶片、先進封裝與 3D 堆疊是你的主場。" },
+        overview:{ en: "Anchor on the three-day HIGS summit (Sep 1, 3, 4 at Ya-Yue Hall, Fu-Li Hall), then add the 3DIC Global Summit (Sep 1) and Panel-Level Fan-Out (Aug 31). HIGS runs three consecutive days in the same room, so it's easy to follow start to finish.",
+                   zh: "以「異質整合 HIGS」三天（9/1、9/3、9/4，雅悅會館 馥儷廳）為主軸，搭配「3DIC 全球高峰論壇」（9/1）與「面板級扇出封裝」（8/31）。HIGS 連三天同一場地，方便從頭跟到尾。" } },
+      { slug: "design-ai", category: "technical", tags: ["AI 特區", "矽光子", "記憶體"],
+        title:   { en: "Design & AI Chips", zh: "設計・AI 晶片" },
+        summary: { en: "AI accelerators, ASICs and the interconnect feeding them.", zh: "AI 加速器、ASIC 與餵養它們的互連。" },
+        overview:{ en: "Start in the AI Technology Zone for chip-design and ASIC trends, then catch Silicon Photonics (Aug 31), the Memory Summit (Sep 1) and Market Trends (Sep 1). Put the CEO Summit (Sep 2) on your must-attend list.",
+                   zh: "先逛「AI 半導體技術特區」掌握晶片設計與 ASIC 趨勢，論壇看「矽光子」（8/31）、「記憶體高峰論壇」（9/1）與「市場趨勢」（9/1），並把「大師論壇」（9/2）列為必聽。" } },
+      { slug: "sustain-facility", category: "technical", tags: ["永續力", "廠房設施", "資安"],
+        title:   { en: "Sustainability & Facilities", zh: "永續・廠務・資安" },
+        summary: { en: "Energy, water, cleanrooms and operational resilience.", zh: "能源、用水、無塵室與運營韌性。" },
+        overview:{ en: "Target the Sustainability Forum (Sep 2, TaiNEX 1 Room 402), the High-Tech Facility Forum (Sep 3), Smart Manufacturing (Sep 1) and the Cybersecurity Summit (Sep 4). Several of these sit inside the halls, so they pair well with show-floor time.",
+                   zh: "鎖定「半導體永續力論壇」（9/2，南港 1 館 402）、「高科技廠房設施論壇」（9/3）、「智慧製造論壇」（9/1）與「資安趨勢高峰論壇」（9/4）。部分在展館內，適合搭配逛展。" } },
+      { slug: "business-bd", category: "business", tags: ["全展區", "市場趨勢", "合作夥伴"],
+        title:   { en: "Procurement, Sales & BD", zh: "採購・業務・商務開發" },
+        summary: { en: "Find the right booths and the right people, fast.", zh: "快速找到對的攤位與對的人。" },
+        overview:{ en: "Use the official exhibitor list to map target booths first, read the room with the Market Trends and CEO Summit forums, and work the Partner Events and the Industry Leadership Dinner for relationship-building.",
+                   zh: "先用官方「參展廠商名單」鎖定目標攤位，聽「市場趨勢論壇」與「大師論壇」掌握風向，並把握「合作夥伴活動」與「科技菁英領袖晚宴」拓展人脈。" } },
+      { slug: "investor", category: "business", tags: ["大師論壇", "市場趨勢", "晶片新創"],
+        title:   { en: "Investors & Analysts", zh: "投資人・分析師" },
+        summary: { en: "Macro signals, supply-demand and the next breakout.", zh: "總經訊號、供需與下一個爆點。" },
+        overview:{ en: "Lead with the CEO Summit, Market Trends and Memory Summit for macro and supply-demand, then visit the Silicon Startups Zone for 10-minute pitches and watch the News Center for first-hand announcements.",
+                   zh: "以「大師論壇」「市場趨勢」「記憶體高峰論壇」抓總經與供需，並到「晶片新創特區」聽 10 分鐘 pitch、留意「新聞中心」第一手消息。" } },
+      { slug: "startup", category: "business", tags: ["晶片新創", "pitch", "媒合"],
+        title:   { en: "Startups", zh: "新創團隊" },
+        summary: { en: "Get on stage, meet partners and investors.", zh: "上台發表，遇見夥伴與投資人。" },
+        overview:{ en: "Your home base is the Silicon Startups Zone (hosted by SEMI with NSTC, linked to the IC Taiwan Grand Challenge); selected teams get a 10-minute pitch slot. Pair it with the 3DIC, Silicon Photonics and Quantum forums to find tech partners and investors.",
+                   zh: "主場是「晶片新創特區」（SEMI 主辦、國科會支持，連結 IC Taiwan Grand Challenge），入選團隊可享 10 分鐘技術發表；搭配 3DIC、矽光子、量子論壇找技術夥伴與投資人。" } },
+      { slug: "student", category: "talent", tags: ["人才培育", "新銳獎", "免費觀展"],
+        title:   { en: "Students & Job-seekers", zh: "學生・求職者" },
+        summary: { en: "Get inside the industry and build your network.", zh: "走進產業現場，累積人脈與視野。" },
+        overview:{ en: "Center your trip on the Workforce Development activities — campus ambassadors, guided floor tours, the 20Under40 Salon and the Tech Master Forum (Sep 4). Admission often has free-entry offers, so register and collect your badge early.",
+                   zh: "以「人才培育主題活動」為核心——校園大使、展區導覽、「新銳獎沙龍」與「科技大師論壇」（9/4）。觀展常有免費入場優惠，建議及早報名領證。" } },
+      { slug: "international", category: "talent", tags: ["旗艦論壇", "交通住宿", "行程規劃"],
+        title:   { en: "International Visitors", zh: "國際訪客" },
+        summary: { en: "Hit the flagship sessions and travel smart.", zh: "鎖定旗艦場次，聰明安排旅程。" },
+        overview:{ en: "Prioritize the flagship CEO Summit (Sep 2) plus HIGS, 3DIC and Silicon Photonics. Use the official \"Plan your trip\" guide for travel and lodging; the venue is Taipei Nangang Exhibition Center, directly served by the Taipei Metro (Nangang Exhibition Center Station).",
+                   zh: "旗艦場次「大師論壇」（9/2）與 HIGS、3DIC、矽光子值得鎖定；用官方「規劃您的行程」安排交通住宿。會場在台北南港展覽館，捷運「南港展覽館站」直達。" } }
     ]
   },
 
