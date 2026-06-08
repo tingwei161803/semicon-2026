@@ -136,6 +136,17 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: -.02em; line-heig
 }
 .brand__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; background: linear-gradient(90deg, var(--text), var(--text-dim)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .appbar__actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.gh-star {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px;
+  border: 1px solid var(--hairline); background: var(--surface-2); color: var(--text-dim);
+  border-radius: var(--radius-pill); font: inherit; font-weight: 700; font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+  transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease), transform .2s var(--ease);
+}
+.gh-star__icon { font-size: 18px; color: #f5b301; }
+.gh-star:hover { color: var(--text); border-color: var(--accent-line); background: var(--accent-soft); transform: translateY(-1px); }
+.gh-star:active { transform: translateY(0) scale(.97); }
+.gh-star__count { min-width: 1ch; }
 .icon-btn {
   display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--hairline);
   background: var(--surface-2); color: var(--text-dim);

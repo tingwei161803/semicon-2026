@@ -22,6 +22,9 @@
   var META = window.SITE_META || { title: {}, subtitle: {}, footer: {} };
   var PAGES = Array.isArray(window.SITE_PAGES) ? window.SITE_PAGES : [];
 
+  /* GitHub repo for the appbar star button (owner/name) */
+  var GH_REPO = "tingwei161803/semicon-2026";
+
   /* ---------- chrome i18n (page content strings live in the data) ---------- */
   var I18N = {
     en: { close: "Close", menu: "Pages", skip: "Skip to content" },
@@ -88,6 +91,12 @@
           '<span class="brand__name" id="brandName"></span>' +
         '</a>' +
         '<div class="appbar__actions">' +
+          '<a class="gh-star" id="ghStar" href="https://github.com/' + GH_REPO + '" ' +
+             'target="_blank" rel="noopener" title="Star on GitHub" ' +
+             'aria-label="Star this project on GitHub / 在 GitHub 給星">' +
+            '<span class="material-symbols-rounded gh-star__icon" aria-hidden="true">star</span>' +
+            '<span class="gh-star__count" id="ghStarCount" aria-hidden="true">★</span>' +
+          '</a>' +
           '<button class="icon-btn" id="langToggle" type="button" title="Language" aria-label="Toggle language / 切換語言">' +
             '<span class="material-symbols-rounded">translate</span>' +
             '<span class="icon-btn__txt" id="langLabel">中</span>' +
@@ -206,6 +215,22 @@
     });
   }
 
+  /* ---------- live GitHub star count (no auth; degrades silently) ---------- */
+  function fetchStars() {
+    var el = document.getElementById("ghStarCount");
+    if (!el || typeof fetch !== "function") return;
+    try {
+      fetch("https://api.github.com/repos/" + GH_REPO, { headers: { Accept: "application/vnd.github+json" } })
+        .then(function (res) { return res.ok ? res.json() : null; })
+        .then(function (data) {
+          if (!data || typeof data.stargazers_count !== "number") return;
+          var n = data.stargazers_count;
+          el.textContent = n >= 1000 ? (Math.round(n / 100) / 10) + "k" : String(n);
+        })
+        .catch(function () { /* offline / rate-limited: keep the ★ placeholder */ });
+    } catch (e) { /* ignore */ }
+  }
+
   /* =======================================================================
      PUBLIC TOOLKIT (app.js uses this)
      ===================================================================== */
@@ -230,6 +255,7 @@
     applyLangChrome();
     refreshChrome();
     wire();
+    fetchStars();
     window.LDW.ready = true;
     document.dispatchEvent(new CustomEvent("ldw:shell-ready"));
   }
