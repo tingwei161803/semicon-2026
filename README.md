@@ -1,8 +1,8 @@
 # SEMICON Taiwan 2026 — 導覽 Guide
 
-> 把 SEMICON Taiwan 2026「Transform Tomorrow」的展會內容，整理成一個多頁、可互動、雙語的靜態導覽站 —— 從展會總覽、20+ 國際論壇，到主題特區、展會週程與參觀資訊。
+> 把 SEMICON Taiwan 2026「Transform Tomorrow」的展會內容，整理成一個多頁、可互動、雙語的靜態導覽站 —— 從展會總覽、20+ 國際論壇，到主題特區、展會週程、參觀資訊與互動小遊戲。
 
-這是一個獨立、非官方的整理站，把 SEMICON Taiwan 2026 的總覽、論壇陣容、論壇時間軸、技術特區、活動週程、逛展參考與參觀須知，整理成 7 個彼此串連的頁面。內容整理自官方網站，純 HTML / CSS / JS、零 build，可直接部署到 GitHub Pages。
+這是一個獨立、非官方的整理站，把 SEMICON Taiwan 2026 的總覽、論壇陣容、論壇時間軸、技術特區、活動週程、逛展參考與參觀須知，再加上四款半導體主題小遊戲，整理成 8 個彼此串連的頁面。內容整理自官方網站，純 HTML / CSS / JS、零 build，可直接部署到 GitHub Pages。
 
 ---
 
@@ -12,7 +12,7 @@
 |---|---|
 | 🌐 網站 | <https://tingwei161803.github.io/semicon-2026/> |
 
-> 直接點進去就能用，無需安裝。頂部跨頁導覽列可在 7 頁之間切換；每頁皆支援中文 / English 與深 / 淺色，論壇頁可用 `…/forums.html#<slug>` 深連結到特定論壇。
+> 直接點進去就能用，無需安裝。頂部跨頁導覽列可在 8 頁之間切換；每頁皆支援中文 / English 與深 / 淺色，論壇頁可用 `…/forums.html#<slug>` 深連結到特定論壇。
 
 ---
 
@@ -27,6 +27,7 @@
 | 展會週程 | `events.html` | 8/31–9/4 一週時間軸：論壇日、展覽開幕、大師論壇、亮點活動與新銳獎壓軸 |
 | 逛展參考 | `guide.html` | **依身分給建議**：工程師 / 商務 / 投資人 / 新創 / 學生 / 國際訪客等 9 種 persona，各自的論壇、特區、動線建議，以及**對應的參展廠商（含攤位號）** |
 | 參觀資訊 | `visit.html` | 展期、地點與交通、購票領證、展區平面圖、參展廠商名單、行程規劃，附官方連結 |
+| 互動小遊戲 | `game.html` | **四款半導體主題小遊戲**：晶片記憶配對、論壇快問快答（用站內資料自動出題）、晶圓分類反應、節點合成 2048；選單卡片進入、頁內切換，最佳分數記錄於 `localStorage` |
 
 ---
 
@@ -36,6 +37,7 @@
 - 🌗 **深色 / 淺色模式** — 近 OLED 深色科技感與冷白淺色，`localStorage` 記憶、跨頁延續
 - 🧭 **跨頁導覽列** — 7 頁一鍵切換，自動高亮目前頁
 - ⭐ **GitHub star 按鈕** — 右上角一鍵前往專案 repo，顯示即時星數（離線 / 限流時自動退回 ★）
+- 🎮 **互動小遊戲** — 四款半導體主題小遊戲（晶片記憶配對、論壇快問快答、晶圓分類反應、節點合成 2048），雙語與深淺色同步，最佳分數存於 `localStorage`
 - 🔍 **即時搜尋 + 領域篩選** — 論壇頁可即時搜尋並依領域 chip 篩選
 - 🪟 **詳情對話框 + 深連結** — 每場論壇可點開看完整介紹，網址帶 `#<slug>` 可分享
 - 🧱 **多種版型** — 複合首頁、卡片牆、bento 特區、時間軸、可展開 FAQ，各取所長
@@ -59,12 +61,18 @@
 
 ```
 semicon-2026/
-├── index.html / forums.html / schedule.html / zones.html /            # 7 個共用 shell 的頁面
-│   events.html / guide.html / visit.html
+├── index.html / forums.html / schedule.html / zones.html /            # 8 個共用 shell 的頁面
+│   events.html / guide.html / visit.html / game.html
 ├── assets/
-│   ├── styles.css      # 設計 token（淺 / 深）+ 全部元件樣式
+│   ├── styles.css      # 設計 token（淺 / 深）+ 全部元件樣式（含小遊戲）
 │   ├── shell.js        # 共用 chrome：appbar / 跨頁導覽 / 頁尾 / dialog / 語言+主題狀態
-│   ├── app.js          # 版型引擎：依 data-page 選 renderer 渲染進 #page
+│   ├── app.js          # 版型引擎：依 data-page 選 renderer 渲染進 #page（含 arcade 版型）
+│   ├── games/          # 小遊戲頁專用（game.html 載入）
+│   │   ├── _registry.js    # window.SEMICON_ARCADE 註冊表（register / list / get）
+│   │   ├── memory.js       # 晶片記憶配對
+│   │   ├── quiz.js         # 論壇快問快答（讀 SITE_PAGES 出題）
+│   │   ├── sorter.js       # 晶圓分類反應
+│   │   └── node2048.js     # 節點合成 2048
 │   └── favicon.svg
 ├── data/
 │   └── data.js         # 唯一資料檔：SITE_META + SITE_PAGES[]（每頁同名 {en,zh} 雙語）

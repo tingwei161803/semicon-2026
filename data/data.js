@@ -485,5 +485,19 @@ window.SITE_PAGES = [
         links: [ { label: { en: "Plan your trip", zh: "規劃您的行程" }, href: "https://www.semicontaiwan.org/zh/about/plan_your_trip" },
                  { label: { en: "Official website", zh: "前往官方網站" }, href: "https://www.semicontaiwan.org/zh" } ] }
     ]
+  },
+
+  /* ===================================================================== *
+   *  GAMES — semiconductor-themed mini-games (arcade layout)
+   *  The launcher menu + game stage are rendered by app.js's "arcade"
+   *  renderer; each game lives in its own assets/games/<id>.js and
+   *  self-registers via window.SEMICON_ARCADE. This page entry only wires
+   *  the page into the cross-page nav.
+   * ===================================================================== */
+  {
+    slug: "game", layout: "arcade", icon: "stadia_controller",
+    title:    { en: "Mini Games", zh: "小遊戲" },
+    subtitle: { en: "Take a break with four bite-sized, semiconductor-themed games — match chips, beat the forum quiz, sort wafers and shrink process nodes.",
+                zh: "用四款半導體主題小遊戲喘口氣——配對晶片、挑戰論壇快問快答、分類晶圓、合成製程節點。" }
   }
 ];

@@ -31,6 +31,7 @@
     var t = L.t, esc = L.escapeHtml, r = L.r;
     var pageEl = document.getElementById("page");
     var teardowns = [];   // observers / listeners to disconnect before each repaint
+    var arcadeActiveId = null;  // which mini-game is open (null = launcher menu); survives repaints
 
     /* ---------- shared bits ---------- */
     function head(p) {
@@ -81,6 +82,45 @@
       return '<svg viewBox="0 0 ' + W + " " + H + '" role="img" preserveAspectRatio="xMidYMid meet" aria-label="line chart">' +
         '<path class="line-area" d="' + area + '" />' +
         '<path class="line-path" d="' + path + '" fill="none" />' + dots + labels + "</svg>";
+    }
+
+    /* ---------- arcade helpers (best score + per-game ctx) ---------- */
+    function bestKey(id) { return "arcade.best." + id; }
+    function readBest(id) {
+      var v = L.lsGet(bestKey(id));
+      if (v == null || v === "") return null;
+      var n = Number(v);
+      return isFinite(n) ? n : null;
+    }
+    function writeBest(id, n, lowerIsBetter) {
+      if (typeof n !== "number" || !isFinite(n)) return readBest(id);
+      var cur = readBest(id);
+      var better = cur == null || (lowerIsBetter ? n < cur : n > cur);
+      if (better) { L.lsSet(bestKey(id), String(n)); return n; }
+      return cur;
+    }
+    function prefersReducedMotion() {
+      try { return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches); }
+      catch (e) { return false; }
+    }
+    /* the toolkit every mini-game's mount(root, ctx) receives */
+    function makeGameCtx(game) {
+      var id = game.id;
+      return {
+        lang: L.state.lang,
+        t: t, esc: esc,
+        lsGet: L.lsGet, lsSet: L.lsSet,
+        reduceMotion: prefersReducedMotion(),
+        getBest: function () { return readBest(id); },
+        setBest: function (n) { return writeBest(id, n, game.lowerIsBetter); },
+        injectStyle: function (css) {
+          var sid = "game-css-" + id;
+          if (document.getElementById(sid)) return;
+          var st = document.createElement("style");
+          st.id = sid; st.textContent = css;
+          document.head.appendChild(st);
+        }
+      };
     }
 
     /* =====================================================================
@@ -379,6 +419,54 @@
             '<div class="map-box" id="map" role="application" aria-label="Map"></div>' +
             '<ul class="map-list" id="mapList"></ul>' +
           "</div>";
+      },
+
+      /* ---- arcade: mini-game launcher menu + in-page game stage ---- */
+      arcade: function (p) {
+        var reg = window.SEMICON_ARCADE;
+        var en = L.state.lang === "en";
+
+        /* stage view: one game is open */
+        if (arcadeActiveId && reg && reg.get(arcadeActiveId)) {
+          var g = reg.get(arcadeActiveId);
+          return '<div class="arcade arcade--playing">' +
+            '<div class="arcade__bar">' +
+              '<button class="icon-btn arcade__back" id="arcadeBack" type="button" ' +
+                'aria-label="' + (en ? "Back to games" : "返回遊戲選單") + '">' +
+                '<span class="material-symbols-rounded" aria-hidden="true">arrow_back</span>' +
+                '<span class="icon-btn__txt">' + (en ? "Games" : "遊戲選單") + "</span>" +
+              "</button>" +
+              '<span class="arcade__now">' +
+                '<span class="material-symbols-rounded" aria-hidden="true">' + esc(g.icon || "videogame_asset") + "</span>" +
+                "<span>" + esc(t(g.title)) + "</span>" +
+              "</span>" +
+            "</div>" +
+            '<div class="arcade__mount" id="arcadeMount"></div>' +
+          "</div>";
+        }
+
+        /* menu view: launcher cards */
+        var list = reg ? reg.list() : [];
+        var cards = list.map(function (g) {
+          var best = readBest(g.id);
+          var bestHtml = best != null ?
+            '<span class="gamecard__best">' +
+              '<span class="material-symbols-rounded" aria-hidden="true">emoji_events</span>' +
+              esc(t(g.scoreLabel || { en: "Best", zh: "最佳" })) + " " + esc(String(best)) +
+            "</span>" : "";
+          return '<button class="card gamecard" type="button" data-game="' + esc(g.id) + '" ' +
+            'aria-label="' + esc(t(g.title)) + '">' +
+            '<span class="gamecard__icon material-symbols-rounded" aria-hidden="true">' + esc(g.icon || "videogame_asset") + "</span>" +
+            '<span class="gamecard__go material-symbols-rounded" aria-hidden="true">play_arrow</span>' +
+            '<h2 class="gamecard__title">' + esc(t(g.title)) + "</h2>" +
+            '<p class="gamecard__desc">' + esc(t(g.desc)) + "</p>" +
+            bestHtml +
+          "</button>";
+        }).join("");
+        var empty = list.length ? "" :
+          '<p class="empty">' + (en ? "No games loaded yet." : "尚未載入任何遊戲。") + "</p>";
+        return head(p) +
+          '<div class="arcade"><div class="arcade__menu grid" data-reveal>' + cards + empty + "</div></div>";
       }
     };
 
@@ -387,6 +475,30 @@
        ===================================================================== */
     var WIRE = {
       hub: function () { animateCounters(); },
+
+      /* arcade: launcher card clicks open a game; back returns to the menu.
+         A teardown unmounts the active game before every repaint (page leave,
+         language switch, or pressing back) so timers/listeners never leak. */
+      arcade: function () {
+        var reg = window.SEMICON_ARCADE;
+
+        if (arcadeActiveId && reg && reg.get(arcadeActiveId)) {
+          var g = reg.get(arcadeActiveId);
+          var mountEl = document.getElementById("arcadeMount");
+          if (mountEl) { try { g.mount(mountEl, makeGameCtx(g)); } catch (e) {} }
+          teardowns.push(function () { try { if (g.unmount) g.unmount(); } catch (e) {} });
+          var back = document.getElementById("arcadeBack");
+          if (back) back.addEventListener("click", function () { arcadeActiveId = null; render(); });
+          return;
+        }
+
+        [].slice.call(pageEl.querySelectorAll("[data-game]")).forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            arcadeActiveId = btn.getAttribute("data-game");
+            render();
+          });
+        });
+      },
 
       gallery: function (p) {
         var grid = document.getElementById("grid");
