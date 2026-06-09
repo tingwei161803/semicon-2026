@@ -10,7 +10,7 @@
 
 | | |
 |---|---|
-| 🌐 網站 | <https://tingwei161803.github.io/semicon-2026/> |
+| 🌐 網站 | <https://semicon-2026.peteraim.com/> |
 
 > 直接點進去就能用，無需安裝。頂部跨頁導覽列可在 7 頁之間切換；每頁皆支援中文 / English 與深 / 淺色，論壇頁可用 `…/forums.html#<slug>` 深連結到特定論壇。
 
