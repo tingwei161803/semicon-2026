@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  本站自己的 sitemap。刻意不寫 <lastmod>:沒有可信的「內容最後修改時間」
+  來源(git commit 時間不等於內容變動時間),給錯的 lastmod 比不給更糟。
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://semicon-2026.peteraim.com/events.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/forums.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/game.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/guide.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/schedule.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/visit.html</loc>
+  </url>
+  <url>
+    <loc>https://semicon-2026.peteraim.com/zones.html</loc>
+  </url>
+</urlset>
