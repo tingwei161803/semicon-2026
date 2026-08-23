@@ -6,8 +6,10 @@
 
      1. reads the current page from <body data-page="..."> (via LDW),
      2. picks a renderer from RENDERERS by that page's `layout`,
-     3. paints it into <main id="page"> and wires its interactions,
-     4. registers an onLang() callback so a language switch repaints the body.
+     3. paints it into <main id="page"> and wires its interactions.
+
+   The language comes from the URL (see shell.js), so the body is painted once
+   per page load — there is no in-place language repaint to subscribe to.
 
    RENDERERS is the LAYOUT REGISTRY — one entry per supported page layout:
      hub | gallery | article | dashboard | timeline | table |
@@ -477,8 +479,8 @@
       hub: function () { animateCounters(); },
 
       /* arcade: launcher card clicks open a game; back returns to the menu.
-         A teardown unmounts the active game before every repaint (page leave,
-         language switch, or pressing back) so timers/listeners never leak. */
+         A teardown unmounts the active game before every repaint (page leave or
+         pressing back) so timers/listeners never leak. */
       arcade: function () {
         var reg = window.SEMICON_ARCADE;
 
@@ -866,7 +868,7 @@
     }
 
     /* =====================================================================
-       RENDER the current page; re-runnable on language switch
+       RENDER the current page; re-runnable (the arcade repaints on open/back)
        ===================================================================== */
     function render() {
       teardowns.forEach(function (fn) { try { fn(); } catch (e) {} });
@@ -881,7 +883,6 @@
       revealize();
     }
 
-    L.onLang(render);
     render();
   }
 
