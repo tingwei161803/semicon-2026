@@ -6,8 +6,10 @@
 
      1. reads the current page from <body data-page="..."> (via LDW),
      2. picks a renderer from RENDERERS by that page's `layout`,
-     3. paints it into <main id="page"> and wires its interactions,
-     4. registers an onLang() callback so a language switch repaints the body.
+     3. paints it into <main id="page"> and wires its interactions.
+
+   The language comes from the URL (see shell.js), so the body is painted once
+   per page load — there is no in-place language repaint to subscribe to.
 
    RENDERERS is the LAYOUT REGISTRY — one entry per supported page layout:
      hub | gallery | article | dashboard | timeline | table |
@@ -328,7 +330,7 @@
       kanban: function (p) {
         var cols = (p.columns || []).map(function (col) {
           var cards = (p.cards || []).filter(function (c) { return c.column === col.key; }).map(function (c) {
-            var tags = (c.tags || []).map(function (g) { return '<span class="tag">' + esc(g) + "</span>"; }).join("");
+            var tags = (c.tags || []).map(function (g) { return '<span class="tag">' + esc(t(g)) + "</span>"; }).join("");
             return '<article class="kb-card" data-item><h3 class="kb-card__title">' + esc(t(c.title)) + "</h3>" +
               (t(c.body) ? '<p class="kb-card__body">' + esc(t(c.body)) + "</p>" : "") +
               (tags ? '<div class="card__tags">' + tags + "</div>" : "") + "</article>";
@@ -477,8 +479,8 @@
       hub: function () { animateCounters(); },
 
       /* arcade: launcher card clicks open a game; back returns to the menu.
-         A teardown unmounts the active game before every repaint (page leave,
-         language switch, or pressing back) so timers/listeners never leak. */
+         A teardown unmounts the active game before every repaint (page leave or
+         pressing back) so timers/listeners never leak. */
       arcade: function () {
         var reg = window.SEMICON_ARCADE;
 
@@ -510,13 +512,14 @@
         function matches(item) {
           if (st.cat && item.category !== st.cat) return false;
           if (!st.q) return true;
-          var hay = (t(item.title) + " " + t(item.summary) + " " + (item.tags || []).join(" ")).toLowerCase();
+          var hay = (t(item.title) + " " + t(item.summary) + " " +
+            (item.tags || []).map(t).join(" ")).toLowerCase();
           return hay.indexOf(st.q) !== -1;
         }
         function paint() {
           var rows = (p.items || []).filter(matches);
           grid.innerHTML = rows.map(function (item) {
-            var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(g) + "</span>"; }).join("");
+            var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(t(g)) + "</span>"; }).join("");
             var exN = (item.exhibitors || []).length;
             var exMeta = exN ? '<p class="card__exmeta"><span class="material-symbols-rounded" aria-hidden="true">storefront</span>' +
               exN + (L.state.lang === "en" ? " related exhibitors" : " 家相關廠商") + "</p>" : "";
@@ -544,7 +547,7 @@
         function openItem(slug) {
           var item = findItem(slug); if (!item) return;
           var dlg = L.dialog(), body = document.getElementById("dialogBody");
-          var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(g) + "</span>"; }).join("");
+          var tags = (item.tags || []).map(function (g) { return '<span class="tag">' + esc(t(g)) + "</span>"; }).join("");
           var exList = item.exhibitors || [];
           var exHtml = "";
           if (exList.length) {
@@ -865,7 +868,7 @@
     }
 
     /* =====================================================================
-       RENDER the current page; re-runnable on language switch
+       RENDER the current page; re-runnable (the arcade repaints on open/back)
        ===================================================================== */
     function render() {
       teardowns.forEach(function (fn) { try { fn(); } catch (e) {} });
@@ -880,7 +883,6 @@
       revealize();
     }
 
-    L.onLang(render);
     render();
   }
 
