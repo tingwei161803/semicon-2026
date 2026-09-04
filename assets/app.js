@@ -100,23 +100,45 @@
         if (e.key === "ArrowRight") { e.preventDefault(); surrender(); go(index + 1, true); }
       });
 
+      /* "the reader took over" is decided from real input events, never from
+         scroll events. A scroll event cannot say who caused it: the tail of our
+         own smooth scroll, and scroll-snap re-settling after a lazy image
+         changes the layout, both look identical to a swipe — and treating
+         those as interaction made the rotation kill itself after one slide. */
+      ["wheel", "touchstart", "pointerdown"].forEach(function (evt) {
+        vp.addEventListener(evt, surrender, { passive: true });
+      });
+
       var scrollTick = null;
       function onScroll() {
-        if (!taken) surrender();
         clearTimeout(scrollTick);
         scrollTick = setTimeout(syncFromScroll, 90);
       }
       vp.addEventListener("scroll", onScroll, { passive: true });
 
-      if (!calm) {
+      /* hovering pauses and un-hovering resumes — a mouse merely crossing the
+         strip should not be enough to kill the rotation for good; only a real
+         interaction (surrender) does that */
+      function start() {
+        if (calm || taken || timer) return;
         timer = setInterval(function () { if (!taken) go(index + 1, true); }, 6000);
-        root.addEventListener("mouseenter", function () { if (timer) clearInterval(timer), timer = null; });
+      }
+      function pause() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+      if (!calm) {
+        start();
+        root.addEventListener("mouseenter", pause);
+        root.addEventListener("mouseleave", start);
         root.addEventListener("focusin", surrender);
       }
       teardowns.push(function () {
         if (timer) clearInterval(timer);
         clearTimeout(scrollTick);
         vp.removeEventListener("scroll", onScroll);
+        ["wheel", "touchstart", "pointerdown"].forEach(function (evt) {
+          vp.removeEventListener(evt, surrender);
+        });
       });
       paintState();
     }
@@ -595,7 +617,9 @@
             '<h2 class="hlt__head">' + esc(t(p.highlightsTitle)) + "</h2>" +
             (t(p.highlightsSub) ? '<p class="hlt__sub">' + esc(t(p.highlightsSub)) + "</p>" : "") +
             '<div class="hlt__stage">' +
-              '<div class="hlt__viewport" id="hltViewport" tabindex="0">' + figs + "</div>" + nav +
+              '<div class="hlt__viewport" id="hltViewport" tabindex="0" role="group" ' +
+                'aria-label="' + esc(t(p.highlightsTitle)) + (en ? " (use arrow keys)" : "（可用左右方向鍵切換）") + '">' +
+                figs + "</div>" + nav +
             "</div>" +
             (slides.length > 1 ? '<div class="hlt__dots">' + dots + "</div>" : "") +
           "</section>";
