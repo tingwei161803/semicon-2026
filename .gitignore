@@ -12,3 +12,4 @@ __pycache__/
 
 # scratch crawl data
 exhibitors.txt
+tmp/

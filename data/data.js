@@ -119,6 +119,42 @@ window.SITE_PAGES = [
     subtitle: { en: "What was actually said, shown and announced during show week — every item linked to its original source.",
                 zh: "展會期間真正被說出口、展出與發表的內容——每一則都附上原始出處連結。" },
 
+    /* Highlight graphics, one carousel per language. The Chinese and English
+       sets are genuinely different artwork with different counts, so slides
+       carry their own `lang` and the renderer keeps only the current one —
+       showing a reader a graphic they cannot read is worse than showing none. */
+    highlightsTitle: { en: "The week in one picture", zh: "一張圖看完整週" },
+    highlightsSub: {
+      en: "Swipe or use the arrows — a few takes on the same story.",
+      zh: "左右滑動或用箭頭切換——同一個故事的幾種說法。"
+    },
+    highlights: [
+      { lang: "zh", src: "/assets/highlights/zh-1-shift.webp",
+        caption: { en: "The shift, in detail", zh: "範式轉移．詳解版" },
+        alt: { en: "Chinese infographic: SEMICON Taiwan 2026, the semiconductor show's shift toward AI infrastructure. Panels cover the redefinition from chipmaking to AI compute, the US$1 trillion milestone arriving four years early, a US$2 trillion 2030 outlook, Google's Asia keynote debut, silicon photonics and CPO as the dominant theme, and quantum and smart fab becoming standalone zones. Footer figures: 1,300+ exhibitors, 4,300+ booths, 100,000+ professional visitors.",
+               zh: "中文資訊圖：SEMICON Taiwan 2026 半導體展向 AI 基礎設施的範式轉移。內容涵蓋展會性質從「如何做晶片」重定義為「如何組建 AI 算力」、1 兆美元里程碑提前四年達成、2030 年產值上看 2 兆美元，以及三大亮點——Google AI 基礎設施長亞洲首場 Keynote、矽光子與 CPO 成為技術主旋律、量子技術與晶圓智造首度獨立成區。頁腳數字：1,300+ 家參展企業、4,300+ 個展出攤位、100,000+ 專業觀眾人次。" } },
+
+      { lang: "zh", src: "/assets/highlights/zh-2-trillion.webp",
+        caption: { en: "The trillion-dollar chart", zh: "一兆美元．曲線版" },
+        alt: { en: "Chinese infographic focused on the market forecast: the show's pivot from equipment manufacturing to AI infrastructure, alongside a curve showing SEMI's US$1 trillion revenue milestone pulled forward to 2026 and the 2030 outlook revised up to US$2 trillion. Scale figures: 1,300+ exhibitors, 4,300+ booths, 65 countries with a record 18 national pavilions, 100,000+ professional visitors.",
+               zh: "中文資訊圖，聚焦市場預測：展會焦點從傳統設備製造轉向建構 AI 基礎設施，並以曲線呈現 SEMI 將全球半導體營收突破一兆美元的時間點從 2030 年提前至 2026 年、2030 年展望上修至 2 兆美元。規模數字：1,300+ 家參展企業、4,300+ 個展出攤位、65 國參與（含創紀錄的 18 國國家館）、100,000+ 專業觀眾人次。" } },
+
+      { lang: "zh", src: "/assets/highlights/zh-3-kawaii.webp",
+        caption: { en: "The same story, softer", zh: "同一件事．手繪版" },
+        alt: { en: "Chinese infographic in a soft hand-drawn style covering the same ground: Google's AI infrastructure chief giving his first Asia keynote, the shift from manufacturing to AI compute, the US$1 trillion milestone arriving four years early with US$2 trillion targeted for 2030, the debut Chiplet pavilion moving the bottleneck from demand to capacity, quantum and smart fab as standalone zones, and silicon photonics and CPO as the week's dominant theme. Scale: 1,300+ exhibitors, 4,300+ booths, 65 countries, 18 national pavilions, 100,000+ visitors.",
+               zh: "中文資訊圖，手繪柔和風格，內容相同：Google AI 基礎設施長亞洲首講、展會重心從製造移向 AI 算力、1 兆美元營收提前四年達陣且 2030 年挑戰 2 兆美元、先進封裝 Chiplet 專區首度登場使瓶頸從市場需求轉向產能供給、量子技術與晶圓智造獨立成區、矽光子與 CPO 成為全場主旋律。規模：1,300+ 家參展企業、4,300+ 個展出攤位、65 個參與國家、18 個國家館、100,000+ 專業觀眾人次。" } },
+
+      { lang: "en", src: "/assets/highlights/en-1-shift.webp",
+        caption: { en: "The shift, in detail", zh: "範式轉移．詳解版（英文）" },
+        alt: { en: "English infographic: SEMICON Taiwan 2026, the transformation to AI infrastructure. Panels cover Google's AI infrastructure chief making his Asia keynote debut, the US$1 trillion year arriving four years early, advanced packaging shifting to a dedicated Chiplet pavilion, hyperscalers joining the main stage alongside TSMC and MediaTek, a US$2 trillion revenue target by 2030, and quantum and smart fab debuting as standalone zones. Footer figures: 1,300+ exhibitors, 4,300+ booths, 65 countries represented, 18 national pavilions, 100,000+ professional visitors.",
+               zh: "英文資訊圖：SEMICON Taiwan 2026 向 AI 基礎設施的轉型。內容涵蓋 Google AI 基礎設施長亞洲首場 keynote、1 兆美元之年提前四年到來、先進封裝移入專屬 Chiplet 展區、超大規模雲端業者與台積電及聯發科並列主舞台、2030 年 2 兆美元營收目標，以及量子與晶圓智造首度獨立成區。頁腳數字：1,300+ 展商、4,300+ 攤位、65 個參與國家、18 個國家館、100,000+ 專業觀眾人次。" } },
+
+      { lang: "en", src: "/assets/highlights/en-2-kawaii.webp",
+        caption: { en: "The same story, softer", zh: "同一件事．手繪版（英文）" },
+        alt: { en: "English infographic in a soft hand-drawn style: the show moving from a chip manufacturing show to an AI infrastructure hub, the US$1 trillion milestone reached four years earlier than predicted, Google's Asia keynote debut, silicon photonics and CPO as the week's central themes, new specialised zones for quantum technology, smart fab and chiplet packaging, and a record 18 countries in the global pavilions. Scale: 1,300+ exhibiting companies, 4,300+ booths, 100,000+ professional visitors.",
+               zh: "英文資訊圖，手繪柔和風格：展會從晶片製造展轉為 AI 基礎設施樞紐、1 兆美元里程碑比預期提前四年達成、Google 亞洲首場 keynote、矽光子與 CPO 為全週核心主題、量子技術與晶圓智造及 Chiplet 封裝等新設專區，以及全球專區創紀錄的 18 國參與。規模：1,300+ 家參展企業、4,300+ 個展出攤位、100,000+ 專業觀眾人次。" } }
+    ],
+
     takeawaysTitle: { en: "What this year was really about", zh: "今年舉辦的重點" },
     takeawaysSub: {
       en: "Six threads ran through the whole week, from the opening keynote to the closing day.",
