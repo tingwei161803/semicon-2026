@@ -469,6 +469,45 @@
           '<p class="empty">' + (en ? "No games loaded yet." : "尚未載入任何遊戲。") + "</p>";
         return head(p) +
           '<div class="arcade"><div class="arcade__menu grid" data-reveal>' + cards + empty + "</div></div>";
+      },
+
+      /* ---- news: dated, source-linked coverage feed ----
+         Every card IS the link to the original article or post: the whole tile
+         is one <a target="_blank">, so an item can never be read here without
+         its source being one click away. Items keep their own `lang` because
+         the coverage really is mixed — a Chinese headline stays Chinese on the
+         English page, flagged by a badge, rather than being quietly reworded
+         into something nobody actually published. */
+      news: function (p) {
+        var en = L.state.lang === "en";
+        var takeaways = "";
+        if (p.takeaways && p.takeaways.length) {
+          var lis = p.takeaways.map(function (tk) {
+            return '<li class="takeaway"><span class="material-symbols-rounded takeaway__icon" aria-hidden="true">' +
+              esc(tk.icon || "bolt") + "</span>" +
+              '<div class="takeaway__text"><b class="takeaway__title">' + esc(t(tk.title)) + "</b>" +
+              '<p class="takeaway__body">' + esc(t(tk.body)) + "</p></div></li>";
+          }).join("");
+          takeaways = '<section class="takeaways" data-item aria-labelledby="takeawaysH">' +
+            '<h2 class="takeaways__head" id="takeawaysH">' + esc(t(p.takeawaysTitle)) + "</h2>" +
+            (t(p.takeawaysSub) ? '<p class="takeaways__sub">' + esc(t(p.takeawaysSub)) + "</p>" : "") +
+            '<ul class="takeaways__list">' + lis + "</ul></section>";
+        }
+        var cats = (p.categories || []).map(function (c) {
+          return '<button class="chip" type="button" data-cat="' + esc(c.key) + '">' +
+            esc(c[L.state.lang] || c.en) + "</button>";
+        }).join("");
+        return head(p) + takeaways +
+          '<div class="toolbar">' +
+            '<input id="search" class="search" type="search" autocomplete="off" ' +
+              'placeholder="' + (en ? "Search coverage…" : "搜尋報導…") + '" ' +
+              'aria-label="' + (en ? "Search coverage" : "搜尋報導") + '" />' +
+            (cats ? '<div class="chips"><button class="chip chip--active" type="button" data-cat="">' +
+              esc(en ? "All" : "全部") + "</button>" + cats + "</div>" : "") +
+          "</div>" +
+          '<p class="result-count" id="resultCount" aria-live="polite"></p>' +
+          '<ol class="feed" id="feed"></ol>' +
+          (t(p.note) ? '<p class="feed-note">' + esc(t(p.note)) + "</p>" : "");
       }
     };
 
@@ -477,6 +516,93 @@
        ===================================================================== */
     var WIRE = {
       hub: function () { animateCounters(); },
+
+      /* news: search + category filter over a feed sorted newest-first.
+         Same-day ties break by source kind, not by array order: on any given
+         show day the official announcement is what the vendor posts and the
+         social chatter are reacting to, so it leads. Without this the feed
+         would silently inherit whatever order the data file happened to use. */
+      news: function (p) {
+        var feed = document.getElementById("feed");
+        var search = document.getElementById("search");
+        var count = document.getElementById("resultCount");
+        var chips = [].slice.call(pageEl.querySelectorAll(".chip"));
+        var en = L.state.lang === "en";
+        var st = { q: "", cat: "" };
+
+        var KIND_RANK = { official: 0, media: 1, vendor: 2, social: 3 };
+        var KIND_LABEL = {};
+        (p.categories || []).forEach(function (c) { KIND_LABEL[c.key] = c; });
+
+        function host(url) {
+          var m = /^https?:\/\/([^\/?#]+)/i.exec(url || "");
+          return m ? m[1].replace(/^www\./, "") : "";
+        }
+        function matches(item) {
+          if (st.cat && item.category !== st.cat) return false;
+          if (!st.q) return true;
+          var hay = (t(item.title) + " " + t(item.summary) + " " +
+            t(item.source) + " " + (item.tags || []).map(t).join(" ")).toLowerCase();
+          return hay.indexOf(st.q) !== -1;
+        }
+        function ordered(items) {
+          return items.slice().sort(function (a, b) {
+            if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+            var ra = KIND_RANK[a.category], rb = KIND_RANK[b.category];
+            return (ra == null ? 9 : ra) - (rb == null ? 9 : rb);
+          });
+        }
+        function paint() {
+          var rows = ordered((p.items || []).filter(matches));
+          var lastDate = null;
+          feed.innerHTML = rows.map(function (item) {
+            var dayHead = "";
+            if (item.date !== lastDate) {
+              lastDate = item.date;
+              /* not aria-hidden: the cards do not repeat their date, so hiding
+                 these would leave a screen reader with no dates at all */
+              dayHead = '<li class="feed-day">' + esc(item.date) + "</li>";
+            }
+            var tags = (item.tags || []).map(function (g) {
+              return '<span class="tag">' + esc(t(g)) + "</span>";
+            }).join("");
+            var foreign = item.lang && item.lang !== L.state.lang;
+            var langBadge = foreign ?
+              '<span class="feed-card__lang">' + (item.lang === "zh" ? "中文" : "EN") + "</span>" : "";
+            return dayHead +
+              '<li class="feed-item" data-item>' +
+                '<a class="feed-card" href="' + esc(item.href) + '" target="_blank" rel="noopener">' +
+                  '<span class="feed-card__meta">' +
+                    '<span class="feed-card__kind feed-card__kind--' + esc(item.category) + '">' +
+                      esc(t(KIND_LABEL[item.category]) || item.category) + "</span>" +
+                    '<span class="feed-card__source">' + esc(t(item.source)) + "</span>" +
+                    langBadge +
+                  "</span>" +
+                  '<span class="feed-card__title">' + esc(t(item.title)) + "</span>" +
+                  '<span class="feed-card__summary">' + esc(t(item.summary)) + "</span>" +
+                  (tags ? '<span class="card__tags">' + tags + "</span>" : "") +
+                  '<span class="feed-card__src">' +
+                    '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>' +
+                    esc(host(item.href) || (en ? "source" : "來源")) +
+                  "</span>" +
+                "</a>" +
+              "</li>";
+          }).join("");
+          if (count) count.textContent = rows.length + (en ? " item(s)" : " 筆");
+        }
+        if (search) search.addEventListener("input", function () {
+          st.q = this.value.trim().toLowerCase(); paint();
+        });
+        chips.forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            chips.forEach(function (c) { c.classList.remove("chip--active"); });
+            chip.classList.add("chip--active");
+            st.cat = chip.dataset.cat || "";
+            paint();
+          });
+        });
+        paint();
+      },
 
       /* arcade: launcher card clicks open a game; back returns to the menu.
          A teardown unmounts the active game before every repaint (page leave or
