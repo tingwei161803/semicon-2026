@@ -214,11 +214,10 @@ window.SITE_PAGES = [
         source: { en: "Taipei Times", zh: "Taipei Times" },
         title: { en: "SEMI pulls its US$1 trillion milestone forward from 2030 to this year",
                  zh: "SEMI 把「全球半導體營收破 1 兆美元」從 2030 年提前到今年" },
-        summary: { en: "Speaking after the show, Taiwan's economy minister said SEMI has raised its global semiconductor revenue forecast to US$1tn this year and US$2tn by 2030 — the earlier estimate had put the US$1tn mark at 2030. He tied it to a planned additional US$20bn of Taiwanese investment in the US.",
-                   zh: "經濟部長於展會後表示，SEMI 已將全球半導體營收預測上修為今年 1 兆美元、2030 年 2 兆美元——先前的估計是 2030 年才達到 1 兆美元。他並提及台灣企業規劃追加赴美投資 200 億美元。" },
+        summary: { en: "Citing the order momentum visible at the show, Taiwan's economy minister said SEMI has raised its global semiconductor revenue forecast to US$1tn this year and US$2tn by 2030 — the earlier estimate had put the US$1tn mark at 2030. He tied it to a planned additional US$20bn of Taiwanese investment in the US.",
+                   zh: "經濟部長談及展會上暢旺的接單動能時表示，SEMI 已將全球半導體營收預測上修為今年 1 兆美元、2030 年 2 兆美元——先前的估計是 2030 年才達到 1 兆美元。他並提及台灣企業規劃追加赴美投資 200 億美元。" },
         href: "https://www.taipeitimes.com/News/biz/archives/2026/09/04/2003863636",
         tags: [ { en: "Market outlook", zh: "市場預測" }, { en: "Policy", zh: "政策" } ] },
-
 
       { date: "2026-09-04", category: "media", lang: "en",
         source: { en: "Digitimes Asia", zh: "Digitimes Asia" },
@@ -229,7 +228,6 @@ window.SITE_PAGES = [
         href: "https://www.digitimes.com/news/a20260904VL212/taiwan-2026-metrology-semiconductor-industry-wafer.html",
         tags: [ { en: "Metrology", zh: "檢測計量" }, { en: "Advanced packaging", zh: "先進封裝" } ] },
 
-
       { date: "2026-09-03", category: "media", lang: "zh",
         source: { en: "Commercial Times", zh: "工商時報" },
         title: { en: "Taiwan's 'AI five' share a stage for the first time — competition is now a whole-supply-chain fight",
@@ -238,7 +236,6 @@ window.SITE_PAGES = [
                    zh: "台積電、聯發科、鴻海、日月光投控與欣興首度同台，五家總市值逾 76 兆元，橫跨晶圓製造、IC 設計、封測、AI 系統與 IC 載板。共同定調：競爭已從單一晶片較勁，升級為整條供應鏈的系統戰。" },
         href: "https://www.ctee.com.tw/news/20260903700054-439901",
         tags: [ { en: "CEO Summit", zh: "大師論壇" }, { en: "Supply chain", zh: "供應鏈" } ] },
-
 
       { date: "2026-09-03", category: "media", lang: "zh",
         source: { en: "TechNews", zh: "科技新報 TechNews" },
@@ -381,7 +378,6 @@ window.SITE_PAGES = [
                    zh: "以「顛覆你對 Relay 的想像」為題，展出可支援至 60GHz 的 Broadband Conical Inductor，以及整合 SiC MOSFET 與光耦合、負載電壓達 kV 等級的 Opto-SiC MOSFET Relay。" },
         href: "https://technews.tw/2026/09/04/toward-semicon-taiwan-2026",
         tags: [ { en: "New product", zh: "新產品" }, { en: "Taiwan supplier", zh: "台廠" } ] },
-
 
       { date: "2026-09-03", category: "vendor", lang: "zh",
         source: { en: "CNA", zh: "中央社 CNA" },
