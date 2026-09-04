@@ -42,6 +42,85 @@
       return '<header class="page-head"><h1>' + esc(t(p.title)) + "</h1>" + sub + "</header>";
     }
 
+    /* Carousel behaviour for the news page's highlight graphics.
+       The markup already works on its own — the strip scroll-snaps and the
+       dots are anchor links — so everything here is enhancement: arrows,
+       hash-free dot clicks, arrow-key support and a gentle auto-advance that
+       gives up permanently the moment the reader takes over. */
+    function wireCarousel(p) {
+      var vp = document.getElementById("hltViewport");
+      if (!vp) return;
+      var slides = [].slice.call(vp.querySelectorAll(".hlt__slide"));
+      if (slides.length < 2) return;
+
+      var root = vp.closest(".hlt");
+      var dots = [].slice.call(root.querySelectorAll(".hlt__dot"));
+      var prev = root.querySelector(".hlt__nav--prev");
+      var next = root.querySelector(".hlt__nav--next");
+      var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var index = 0, taken = false, timer = null;
+
+      function go(i, smooth) {
+        index = (i + slides.length) % slides.length;
+        vp.scrollTo({ left: slides[index].offsetLeft - slides[0].offsetLeft,
+                      behavior: (smooth && !calm) ? "smooth" : "auto" });
+        paintState();
+      }
+      /* Deliberately no aria-hidden on the off-screen slides. The static
+         snapshot in the .html freezes whatever the DOM looks like when it is
+         taken, so hiding them here would hide them permanently for anyone
+         without JS — and these slides are alternative renderings of the same
+         summary, so letting a screen reader hear all of them is no loss. */
+      function paintState() {
+        dots.forEach(function (d, i) { d.classList.toggle("hlt__dot--on", i === index); });
+      }
+      /* the reader scrolling by hand is the source of truth for which slide is
+         showing — recompute from scroll position rather than trusting `index` */
+      function syncFromScroll() {
+        var mid = vp.scrollLeft + vp.clientWidth / 2, best = 0, bestD = Infinity;
+        slides.forEach(function (s, i) {
+          var c = s.offsetLeft - slides[0].offsetLeft + s.clientWidth / 2;
+          var d = Math.abs(c - mid);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        if (best !== index) { index = best; paintState(); }
+      }
+      function surrender() {
+        taken = true;
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      if (prev) prev.addEventListener("click", function () { surrender(); go(index - 1, true); });
+      if (next) next.addEventListener("click", function () { surrender(); go(index + 1, true); });
+      dots.forEach(function (d, i) {
+        d.addEventListener("click", function (e) { e.preventDefault(); surrender(); go(i, true); });
+      });
+      vp.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") { e.preventDefault(); surrender(); go(index - 1, true); }
+        if (e.key === "ArrowRight") { e.preventDefault(); surrender(); go(index + 1, true); }
+      });
+
+      var scrollTick = null;
+      function onScroll() {
+        if (!taken) surrender();
+        clearTimeout(scrollTick);
+        scrollTick = setTimeout(syncFromScroll, 90);
+      }
+      vp.addEventListener("scroll", onScroll, { passive: true });
+
+      if (!calm) {
+        timer = setInterval(function () { if (!taken) go(index + 1, true); }, 6000);
+        root.addEventListener("mouseenter", function () { if (timer) clearInterval(timer), timer = null; });
+        root.addEventListener("focusin", surrender);
+      }
+      teardowns.push(function () {
+        if (timer) clearInterval(timer);
+        clearTimeout(scrollTick);
+        vp.removeEventListener("scroll", onScroll);
+      });
+      paintState();
+    }
+
     function barChart(series, accent) {
       var W = 520, H = 240, padL = 16, padR = 16, padT = 16, padB = 44;
       var plotW = W - padL - padR, plotH = H - padT - padB;
@@ -480,6 +559,48 @@
          into something nobody actually published. */
       news: function (p) {
         var en = L.state.lang === "en";
+
+        /* Highlight graphics. The Chinese and English sets are different
+           artwork, so only the current language's slides are kept — handing a
+           reader a graphic they cannot read is worse than handing them none.
+           The strip is a scroll-snap container and the dots are real anchor
+           links, so it stays swipeable and navigable with no JS at all; the
+           arrows and auto-advance in WIRE.news are the enhancement on top. */
+        var slides = (p.highlights || []).filter(function (h) { return h.lang === L.state.lang; });
+        var carousel = "";
+        if (slides.length) {
+          var figs = slides.map(function (h, i) {
+            return '<figure class="hlt__slide" id="hlt-' + i + '" role="group" ' +
+              'aria-roledescription="' + (en ? "slide" : "投影片") + '" ' +
+              'aria-label="' + (i + 1) + " / " + slides.length + '">' +
+              '<img class="hlt__img" src="' + esc(h.src) + '" alt="' + esc(t(h.alt)) + '" ' +
+                'width="1920" height="1072" decoding="async" ' +
+                'loading="' + (i === 0 ? "eager" : "lazy") + '" />' +
+              (t(h.caption) ? '<figcaption class="hlt__cap">' + esc(t(h.caption)) + "</figcaption>" : "") +
+              "</figure>";
+          }).join("");
+          var dots = slides.map(function (h, i) {
+            return '<a class="hlt__dot' + (i === 0 ? " hlt__dot--on" : "") + '" href="#hlt-' + i + '" ' +
+              'aria-label="' + esc(t(h.caption)) + '"></a>';
+          }).join("");
+          var nav = slides.length > 1 ?
+            '<button class="hlt__nav hlt__nav--prev" type="button" ' +
+              'aria-label="' + (en ? "Previous slide" : "上一張") + '">' +
+              '<span class="material-symbols-rounded" aria-hidden="true">chevron_left</span></button>' +
+            '<button class="hlt__nav hlt__nav--next" type="button" ' +
+              'aria-label="' + (en ? "Next slide" : "下一張") + '">' +
+              '<span class="material-symbols-rounded" aria-hidden="true">chevron_right</span></button>' : "";
+          carousel = '<section class="hlt" data-item aria-roledescription="carousel" ' +
+              'aria-label="' + esc(t(p.highlightsTitle)) + '">' +
+            '<h2 class="hlt__head">' + esc(t(p.highlightsTitle)) + "</h2>" +
+            (t(p.highlightsSub) ? '<p class="hlt__sub">' + esc(t(p.highlightsSub)) + "</p>" : "") +
+            '<div class="hlt__stage">' +
+              '<div class="hlt__viewport" id="hltViewport" tabindex="0">' + figs + "</div>" + nav +
+            "</div>" +
+            (slides.length > 1 ? '<div class="hlt__dots">' + dots + "</div>" : "") +
+          "</section>";
+        }
+
         var takeaways = "";
         if (p.takeaways && p.takeaways.length) {
           var lis = p.takeaways.map(function (tk) {
@@ -497,7 +618,7 @@
           return '<button class="chip" type="button" data-cat="' + esc(c.key) + '">' +
             esc(c[L.state.lang] || c.en) + "</button>";
         }).join("");
-        return head(p) + takeaways +
+        return head(p) + carousel + takeaways +
           '<div class="toolbar">' +
             '<input id="search" class="search" type="search" autocomplete="off" ' +
               'placeholder="' + (en ? "Search coverage…" : "搜尋報導…") + '" ' +
@@ -523,6 +644,8 @@
          social chatter are reacting to, so it leads. Without this the feed
          would silently inherit whatever order the data file happened to use. */
       news: function (p) {
+        wireCarousel(p);
+
         var feed = document.getElementById("feed");
         var search = document.getElementById("search");
         var count = document.getElementById("resultCount");
