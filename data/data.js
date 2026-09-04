@@ -1106,7 +1106,7 @@ window.SITE_PAGES = [
   {
     slug: "game", layout: "arcade", icon: "stadia_controller",
     title:    { en: "Mini Games", zh: "小遊戲" },
-    subtitle: { en: "Take a break with four bite-sized, semiconductor-themed games — match chips, beat the forum quiz, sort wafers and shrink process nodes.",
-                zh: "用四款半導體主題小遊戲喘口氣——配對晶片、挑戰論壇快問快答、分類晶圓、合成製程節點。" }
+    subtitle: { en: "Take a break with seven bite-sized, semiconductor-themed games — match chips, beat the forum quiz, sort wafers, shrink process nodes, sweep a wafer for defects, order the fab flow and recall the process recipe.",
+                zh: "用七款半導體主題小遊戲喘口氣——配對晶片、挑戰論壇快問快答、分類晶圓、合成製程節點、晶圓掃雷、排製程順序、記製程配方。" }
   }
 ];
