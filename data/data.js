@@ -210,6 +210,24 @@ window.SITE_PAGES = [
         tags: [ { en: "Awards", zh: "獎項" }, { en: "Talent", zh: "人才" } ] },
 
       /* ---------------- media ---------------- */
+      { date: "2026-09-02", category: "media", lang: "zh",
+        source: { en: "CRNTT", zh: "中評社" },
+        title: { en: "SEMI hands its first Semiconductor Partnership Leadership Award to the AIT director",
+                 zh: "SEMI 首度頒發半導體夥伴領導獎給 AIT 處長谷立言" },
+        summary: { en: "First-hand reporting from the opening ceremony: the premier attended with the economy minister and the NSTC head, then toured the US pavilion. At the ceremony SEMI gave a first-of-its-kind partnership leadership award to AIT's director for his role in US-Taiwan chip cooperation. The premier's remarks put the number of national pavilions at 19.",
+                   zh: "開幕典禮現場報導：行政院長卓榮泰偕經濟部長龔明鑫、國科會主委吳誠文出席後參觀美國專區。典禮上 SEMI 首度頒發「半導體夥伴領導獎」給美國在台協會處長谷立言，表彰其促成台美半導體合作的角色。卓榮泰致詞時提及共 19 國設置國家館。" },
+        href: "https://hk.crntt.com/doc/1602/6/3/7/160263743.html?coluid=7&kindid=0&docid=160263743&mdate=0902150841",
+        tags: [ { en: "Opening", zh: "開幕" }, { en: "Awards", zh: "獎項" } ] },
+
+      { date: "2026-09-02", category: "media", lang: "zh",
+        source: { en: "Anue Cnyes", zh: "鉅亨網" },
+        title: { en: "US pavilion opens as Taiwan announces another US$20 billion of US investment",
+                 zh: "台美合作開新局！龔明鑫爆赴美「加碼」200 億美元再掀一波投資潮" },
+        summary: { en: "The Chinese-language opening-day account of the US pavilion ribbon-cutting, where the economy minister put a further US$20bn of Taiwanese investment in the US on the table — on top of the US$35bn pledged in May.",
+                   zh: "美國館揭幕當天的中文報導：經濟部長於現場宣布台灣半導體供應鏈再加碼 200 億美元赴美投資，係在 5 月已宣布的 350 億美元之外。" },
+        href: "https://news.cnyes.com/news/id/6595465",
+        tags: [ { en: "Opening", zh: "開幕" }, { en: "Policy", zh: "政策" } ] },
+
       { date: "2026-09-04", category: "media", lang: "en",
         source: { en: "Taipei Times", zh: "Taipei Times" },
         title: { en: "SEMI pulls its US$1 trillion milestone forward from 2030 to this year",
