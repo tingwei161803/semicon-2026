@@ -500,10 +500,10 @@
         return head(p) + takeaways +
           '<div class="toolbar">' +
             '<input id="search" class="search" type="search" autocomplete="off" ' +
-              'placeholder="' + (en ? "Search coverage\u2026" : "\u641c\u5c0b\u5831\u5c0e\u2026") + '" ' +
-              'aria-label="' + (en ? "Search coverage" : "\u641c\u5c0b\u5831\u5c0e") + '" />' +
+              'placeholder="' + (en ? "Search coverage…" : "搜尋報導…") + '" ' +
+              'aria-label="' + (en ? "Search coverage" : "搜尋報導") + '" />' +
             (cats ? '<div class="chips"><button class="chip chip--active" type="button" data-cat="">' +
-              esc(en ? "All" : "\u5168\u90e8") + "</button>" + cats + "</div>" : "") +
+              esc(en ? "All" : "全部") + "</button>" + cats + "</div>" : "") +
           "</div>" +
           '<p class="result-count" id="resultCount" aria-live="polite"></p>' +
           '<ol class="feed" id="feed"></ol>' +
@@ -556,18 +556,20 @@
           var rows = ordered((p.items || []).filter(matches));
           var lastDate = null;
           feed.innerHTML = rows.map(function (item) {
-            var head = "";
+            var dayHead = "";
             if (item.date !== lastDate) {
               lastDate = item.date;
-              head = '<li class="feed-day" aria-hidden="true">' + esc(item.date) + "</li>";
+              /* not aria-hidden: the cards do not repeat their date, so hiding
+                 these would leave a screen reader with no dates at all */
+              dayHead = '<li class="feed-day">' + esc(item.date) + "</li>";
             }
             var tags = (item.tags || []).map(function (g) {
               return '<span class="tag">' + esc(t(g)) + "</span>";
             }).join("");
             var foreign = item.lang && item.lang !== L.state.lang;
             var langBadge = foreign ?
-              '<span class="feed-card__lang">' + (item.lang === "zh" ? "\u4e2d\u6587" : "EN") + "</span>" : "";
-            return head +
+              '<span class="feed-card__lang">' + (item.lang === "zh" ? "中文" : "EN") + "</span>" : "";
+            return dayHead +
               '<li class="feed-item" data-item>' +
                 '<a class="feed-card" href="' + esc(item.href) + '" target="_blank" rel="noopener">' +
                   '<span class="feed-card__meta">' +
@@ -581,12 +583,12 @@
                   (tags ? '<span class="card__tags">' + tags + "</span>" : "") +
                   '<span class="feed-card__src">' +
                     '<span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>' +
-                    esc(host(item.href) || (en ? "source" : "\u4f86\u6e90")) +
+                    esc(host(item.href) || (en ? "source" : "來源")) +
                   "</span>" +
                 "</a>" +
               "</li>";
           }).join("");
-          if (count) count.textContent = rows.length + (en ? " item(s)" : " \u7b46");
+          if (count) count.textContent = rows.length + (en ? " item(s)" : " 筆");
         }
         if (search) search.addEventListener("input", function () {
           st.q = this.value.trim().toLowerCase(); paint();
