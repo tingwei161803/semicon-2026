@@ -121,8 +121,8 @@ window.SITE_PAGES = [
 
     takeawaysTitle: { en: "What this year was really about", zh: "今年舉辦的重點" },
     takeawaysSub: {
-      en: "Five threads ran through the whole week, from the opening keynote to the show floor.",
-      zh: "從開幕主題演講到展場地面，貫穿整週的五條主線。"
+      en: "Six threads ran through the whole week, from the opening keynote to the closing day.",
+      zh: "從開幕主題演講到閉幕日，貫穿整週的六條主線。"
     },
     takeaways: [
       { icon: "hub",
@@ -141,6 +141,11 @@ window.SITE_PAGES = [
         title: { en: "Quantum and smart fab arrived as first-class zones", zh: "量子與晶圓智造首度成為獨立特區" },
         body: { en: "Two zones debuted this year: a Quantum Technology Zone covering superconducting, ion-trap and annealing paths, and a Smart Fab Zone showing collaborative and humanoid robots, digital twins and industrial AI on the fab floor.",
                 zh: "今年首度新增兩大特區：量子技術特區涵蓋超導體、離子阱與量子退火三條路線；晶圓智造特區則呈現協作型與人形機器人、數位孿生與工業 AI 在廠務現場的應用。" } },
+      { icon: "trending_up",
+        title: { en: "The industry's yardstick got redrawn mid-show", zh: "產業的標尺在展期中被重畫" },
+        body: { en: "SEMI pulled its US$1 trillion revenue milestone forward from 2030 to this year and now projects US$2 trillion by 2030. Equipment forecasts moved with it — 2026 wafer fab equipment spend up 23.1% to about US$144bn, and TSMC signalling 2026 capex approaching US$64bn.",
+                zh: "SEMI 把「全球半導體營收破 1 兆美元」從 2030 年提前到今年，並將 2030 年上修至 2 兆美元。設備預測同步走高——2026 年晶圓廠設備支出年增 23.1% 至約 1,439 億美元，台積電並釋出 2026 年資本支出逼近 640 億美元的訊號。" } },
+
       { icon: "public",
         title: { en: "Record international scale, with geopolitics on the main stage", zh: "國際規模創紀錄，地緣政治也上了主舞台" },
         body: { en: "The global pavilion drew a record 18 countries. President Lai used the Semicon Network Summit to pitch Taiwan's ecosystem as a resilience play, and a US undersecretary called semiconductors the most important technology of our lifetime.",
@@ -205,6 +210,42 @@ window.SITE_PAGES = [
         tags: [ { en: "Awards", zh: "獎項" }, { en: "Talent", zh: "人才" } ] },
 
       /* ---------------- media ---------------- */
+      { date: "2026-09-04", category: "media", lang: "en",
+        source: { en: "Taipei Times", zh: "Taipei Times" },
+        title: { en: "SEMI pulls its US$1 trillion milestone forward from 2030 to this year",
+                 zh: "SEMI 把「全球半導體營收破 1 兆美元」從 2030 年提前到今年" },
+        summary: { en: "Citing the order momentum visible at the show, Taiwan's economy minister said SEMI has raised its global semiconductor revenue forecast to US$1tn this year and US$2tn by 2030 — the earlier estimate had put the US$1tn mark at 2030. He tied it to a planned additional US$20bn of Taiwanese investment in the US.",
+                   zh: "經濟部長談及展會上暢旺的接單動能時表示，SEMI 已將全球半導體營收預測上修為今年 1 兆美元、2030 年 2 兆美元——先前的估計是 2030 年才達到 1 兆美元。他並提及台灣企業規劃追加赴美投資 200 億美元。" },
+        href: "https://www.taipeitimes.com/News/biz/archives/2026/09/04/2003863636",
+        tags: [ { en: "Market outlook", zh: "市場預測" }, { en: "Policy", zh: "政策" } ] },
+
+      { date: "2026-09-04", category: "media", lang: "en",
+        source: { en: "Digitimes Asia", zh: "Digitimes Asia" },
+        title: { en: "QuantumDiamonds cracks the hybrid bonding blind spot with new inline metrology",
+                 zh: "QuantumDiamonds 以新的線上量測補上混合鍵合的盲區" },
+        summary: { en: "A startup showing at the metrology forum on closing day: inline measurement aimed at the part of hybrid bonding that existing tools cannot see — the inspection gap that advanced packaging keeps running into.",
+                   zh: "閉幕日檢測計量論壇上的新創展示：針對現有工具看不到的混合鍵合環節做線上量測，正是先進封裝一再撞上的檢測缺口。" },
+        href: "https://www.digitimes.com/news/a20260904VL212/taiwan-2026-metrology-semiconductor-industry-wafer.html",
+        tags: [ { en: "Metrology", zh: "檢測計量" }, { en: "Advanced packaging", zh: "先進封裝" } ] },
+
+      { date: "2026-09-03", category: "media", lang: "zh",
+        source: { en: "Commercial Times", zh: "工商時報" },
+        title: { en: "Taiwan's 'AI five' share a stage for the first time — competition is now a whole-supply-chain fight",
+                 zh: "晶片升級「系統戰」！科技五虎將開講，說的其實是同一句話：AI 需求仍強" },
+        summary: { en: "TSMC, MediaTek, Foxconn, ASE and Unimicron — together worth over NT$76 trillion — appeared together for the first time, spanning foundry, IC design, test and assembly, AI systems and substrates. Their shared message: the contest has moved from single chips to the whole supply chain.",
+                   zh: "台積電、聯發科、鴻海、日月光投控與欣興首度同台，五家總市值逾 76 兆元，橫跨晶圓製造、IC 設計、封測、AI 系統與 IC 載板。共同定調：競爭已從單一晶片較勁，升級為整條供應鏈的系統戰。" },
+        href: "https://www.ctee.com.tw/news/20260903700054-439901",
+        tags: [ { en: "CEO Summit", zh: "大師論壇" }, { en: "Supply chain", zh: "供應鏈" } ] },
+
+      { date: "2026-09-03", category: "media", lang: "zh",
+        source: { en: "TechNews", zh: "科技新報 TechNews" },
+        title: { en: "This year's show isn't over and the 2027 booth scramble has already begun",
+                 zh: "今年展還沒結束、明年先廝殺！SEMICON 台灣 2027 搶攤大戰開打" },
+        summary: { en: "A look at how floor space actually gets allocated: priority follows how many years a company has exhibited, so the long-timers pick first and latecomers are left with whatever is off the main aisles.",
+                   zh: "報導展位如何分配：排序依過往參展次數而定，「老班底」先挑，熱門走道與人流密集區最搶手，排序靠後的廠商選擇餘地有限。" },
+        href: "https://ccc.technews.tw/2026/09/03/semicon-taiwan-2027-booth-wars-kick-off-before-this-years-exhibition-concludes",
+        tags: [ { en: "Behind the scenes", zh: "展會幕後" } ] },
+
       { date: "2026-09-03", category: "media", lang: "en",
         source: { en: "Digitimes Asia", zh: "Digitimes Asia" },
         title: { en: "TSMC doubles down on equipment purchases as AI outpaces supply-chain planning",
@@ -329,6 +370,24 @@ window.SITE_PAGES = [
         tags: [ { en: "Show floor", zh: "展場亮點" }, { en: "Talent", zh: "人才培育" } ] },
 
       /* ---------------- vendor ---------------- */
+      { date: "2026-09-04", category: "vendor", lang: "zh",
+        source: { en: "TechNews", zh: "科技新報 TechNews" },
+        title: { en: "Toward Technologies brings 60GHz relays and Opto-SiC MOSFET switching",
+                 zh: "拓緯展示最新 Relay 技術，布局高階 Switching Solution" },
+        summary: { en: "The company showed a broadband conical inductor supporting up to 60GHz and an Opto-SiC MOSFET relay combining SiC MOSFETs with optocouplers at kV-class load voltage.",
+                   zh: "以「顛覆你對 Relay 的想像」為題，展出可支援至 60GHz 的 Broadband Conical Inductor，以及整合 SiC MOSFET 與光耦合、負載電壓達 kV 等級的 Opto-SiC MOSFET Relay。" },
+        href: "https://technews.tw/2026/09/04/toward-semicon-taiwan-2026",
+        tags: [ { en: "New product", zh: "新產品" }, { en: "Taiwan supplier", zh: "台廠" } ] },
+
+      { date: "2026-09-03", category: "vendor", lang: "zh",
+        source: { en: "CNA", zh: "中央社 CNA" },
+        title: { en: "Qisda Group targets CPO with a 160-channel fiber array unit line",
+                 zh: "佳世達集團聚焦先進製程 CPO 與矽光子應用" },
+        summary: { en: "Three group companies exhibited: dry-ice cleaning modules for precision cleaning, electronic fluorinated liquid for tool temperature control and server cooling, and a 160-channel FAU one-stop manufacturing solution aimed at CPO volume production.",
+                   zh: "集團旗下三家公司參展：羅昇推乾冰清洗倉模組做精密清潔、資騰導入電子氟化液用於設備溫控與伺服器冷卻、光陽光電以「160 通道 FAU 智慧製造一站式解決方案」切入 CPO 量產需求。" },
+        href: "https://www.cna.com.tw/news/afe/202609030305.aspx",
+        tags: [ { en: "CPO", zh: "CPO" }, { en: "Taiwan supplier", zh: "台廠" } ] },
+
       { date: "2026-09-03", category: "vendor", lang: "zh",
         source: { en: "TechNews", zh: "科技新報 TechNews" },
         title: { en: "Applied Materials on CPO's thermal problem: optics don't just slow down, they move",
