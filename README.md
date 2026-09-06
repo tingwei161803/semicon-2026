@@ -89,7 +89,11 @@ semicon-2026/
 ├── data/
 │   └── data.js         # 唯一資料檔：SITE_META + SITE_PAGES[]（每頁同名 {en,zh} 雙語）
 ├── docs/               # 設計規格與社群分享圖的內容 brief
-├── og-image.png · sitemap.xml · robots.txt · CNAME · .nojekyll
+├── tools/
+│   └── og-news-cards.py  # 產生現場快報頁的中英 og:image（uv run --with pillow tools/og-news-cards.py）
+├── og-image.png        # 社群分享圖：全站共用
+├── og-news-zh.png · og-news-en.png  # 社群分享圖：現場快報頁中英各一張（由 tools/ 產生）
+├── sitemap.xml · robots.txt · CNAME · .nojekyll
 └── README.md
 ```
 
